@@ -87,7 +87,16 @@ def aggiungi_foto(album, codice, titolo, autore, mese, anno, file_path):
 
 def cerca_foto(album, codice):
     """Cerca una foto nell'album dato il codice"""
-    # TODO
+    if not album:
+        return None
+
+        # Scansione di tutte le liste di foto nell'album
+    for lista_foto in album.values():
+        for foto in lista_foto:
+            if foto["codice"] == codice:
+                return f"{foto['codice']}, {foto['titolo']}, {foto['autore']}, {foto['mese']}, {foto['anno']}"
+
+    return None
 
 
 def elenco_foto_anno_per_titolo(album, anno):
