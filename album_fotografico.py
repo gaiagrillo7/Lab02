@@ -47,7 +47,42 @@ def carica_da_file(file_path):
 
 def aggiungi_foto(album, codice, titolo, autore, mese, anno, file_path):
     """Aggiunge una foto all'album, creando l'anno al volo se non è ancora presente"""
-    # TODO
+    # Controllo validità mese
+    if mese < 1 or mese > 12:
+        return None
+
+    # Controllo codice duplicato nell'album
+    if album:
+        for lista_foto in album.values():
+            for foto in lista_foto:
+                if foto["codice"] == codice:
+                    return None
+
+    # Scrittura in coda al file CSV
+    try:
+        with open(file_path, 'a', encoding='utf-8') as file:
+            file.write(f"{codice},{titolo},{autore},{mese},{anno}\n")
+    except FileNotFoundError:
+        return None
+
+    foto = {
+        "codice": codice,
+        "titolo": titolo,
+        "autore": autore,
+        "mese": mese,
+        "anno": anno
+    }
+
+    # Aggiornamento dell'album in memoria
+    if album is None:
+        album = {}
+
+    if anno not in album:
+        album[anno] = []
+
+    album[anno].append(foto)
+
+    return foto
 
 
 def cerca_foto(album, codice):
