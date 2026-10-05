@@ -101,7 +101,12 @@ def cerca_foto(album, codice):
 
 def elenco_foto_anno_per_titolo(album, anno):
     """Ordina i titoli delle foto di un dato anno in ordine alfabetico"""
-    # TODO
+    if not album or anno not in album:
+        return None
+
+        # Estrazione dei titoli e ordinamento alfabetico
+    titoli = [foto["titolo"] for foto in album[anno]]
+    return sorted(titoli)
 
 
 def main():
